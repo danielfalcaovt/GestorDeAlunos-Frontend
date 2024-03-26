@@ -1,0 +1,86 @@
+#login-page #login-landing {
+  grid-area: 1/1/1/1;
+  background: #141677;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#login-page #logo {
+  border-radius: 50%;
+  width: 200px;
+  margin-bottom: 50px;
+}
+
+#landing-text {
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.164);
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  color: white;
+  font-size: 2rem;
+}
+
+#formularioDeLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  height: 50vh;
+}
+
+#formularioDeLogin > input {
+  padding: 5px 15px;
+  margin-bottom: 15px;
+  width: 250px;
+  height: 25px;
+}
+
+#formularioDeLogin button {
+  padding: 5px 15px;
+  border-radius: 10px;
+  border: 0px;
+  background: #373ad3;
+  color: white;
+  cursor: pointer;
+  height: 30px;
+  width: 150px;
+  margin-top: 15px;
+}
+
+#asset {
+  border-radius: 50%;
+  width: 350px;
+}
+
+#login-page #login-form {
+  grid-area: 1/2/1/3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#login-page header {
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-form main {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#login-page {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  grid-template-rows: 1fr;
+  height: 100vh;
+}
