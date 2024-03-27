@@ -1,4 +1,4 @@
-modal {
+#logout-modal {
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -7,7 +7,6 @@ modal {
   display: none;
   justify-content: center;
   align-items: center;
-  
 }
 
 #modal-content {

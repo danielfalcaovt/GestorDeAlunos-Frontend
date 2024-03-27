@@ -1,7 +1,7 @@
-export default function Modal() {
+export default function LogoutModal() {
 
   function logOutConfirm(evt) {
-    var modal = document.querySelector("modal");
+    var modal = document.querySelector("#logout-modal");
     if (evt.target.id === "confirmar"){
       localStorage.removeItem("token");
       window.location.reload()
@@ -11,7 +11,7 @@ export default function Modal() {
   }
 
   return(
-    <modal>
+    <modal id="logout-modal">
       <div id="modal-content">
         <header>
           <h1>Você tem certeza?</h1>

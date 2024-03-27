@@ -70,7 +70,7 @@
   justify-content: flex-start;
 }
 
-aside button {
+#app aside #logout {
   grid-area: 4/1/4/2;
   height: 35px;
   width: 100px;
@@ -111,33 +111,45 @@ aside button {
   align-items: center;
 }
 
-#app nav div {
+#app nav .crud-alunos {
+  border: 0px;
   padding: 15px 0px;
   width: 70%;
   border-bottom: 2px solid #111266;
-}
-#app nav div h1 {
-  font-weight: 300;
   cursor: pointer;
+  font-weight: 300;
+  color: white;
 }
 
-#app nav div:not(:hover) h1 {
-  margin-left: 0px;
+#app nav .crud-alunos:not(:hover) h1 {
   transition: all 0.3s;
 }
 
-#app nav div:hover h1 {
-  margin-left: 25px;
+#app nav .crud-alunos:hover h1 {
+  transform: scale(1.1);
   transition: all 0.3s;
 }
 
-#app nav div:hover {
-  text-decoration: underline;
+#app nav .crud-alunos:hover {
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.16);
   background: #111266;
   transition: all 0.3s;
   padding: 20px 0px;
 }
-#app nav div:not(:hover) {
+
+#app nav .cadastrar:hover {
+  background: rgb(30, 169, 30);
+}
+
+#app nav .alterar:hover {
+  background: rgb(177, 177, 60);
+}
+
+#app nav .remover:hover {
+  background: #83100c;
+}
+
+#app nav .crud-alunos:not(:hover) {
   transition: all 0.3s;
   background: transparent;
 }
@@ -152,17 +164,41 @@ aside button {
 #app table {
   border-collapse: collapse;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.342);
+  width: 100%;
 }
+
+#app table td,th {
+  border: 2px solid black;
+  font-size: 1rem;
+}
+
+#app table td {
+  padding: 2px 8px;
+}
+
+#app .cep-cell {
+  font-size: 1rem;
+}
+
+#app table th {
+  border-bottom: 0px;
+}
+
 #app thead {
   background: #83100c;
   color: white;
 }
 #app thead th {
-  padding: 15px 45px;
+  padding: 5px 10px;
 }
 #app tbody > tr:nth-child(even) {
   background: #952C2C;
 }
 #app tbody > tr:nth-child(odd) {
   background: #952c2cae;
+}
+
+#app tbody > tr td {
+  color: white;
+  text-align: center;
 }

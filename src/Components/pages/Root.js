@@ -1,20 +1,25 @@
-import Aside from "../Elements/Aside"
-import Gestor from "../Elements/Gestor"
+import Aside from "../Elements/Aside";
+import Gestor from "../Elements/Gestor";
 import Main from "../Elements/Main";
-import Modal from "../Elements/Modal";
-import { useContext } from "react";
+import LogoutModal from "../Elements/LogoutModal";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
+import { DataContext } from "../../Contexts/DataContext";
+import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
+import { verificarValidadeDoToken } from "../../App";
+import fetchUserData from "../../database/fetchUserData";
 
 export default function Root() {
-  const {auth, setAuth} = useContext(AuthContext);
-  console.log(auth);
+  const [GestorFunction, setGestorFunction] = useState("consultar");
 
   return (
     <div id="app">
-      <Aside />
       <Main />
-      <Modal />
-      <Gestor />
+      <LogoutModal />
+      <GestorFunctionContext.Provider value={{ GestorFunction, setGestorFunction }}>
+        <Aside />
+        <Gestor />
+      </GestorFunctionContext.Provider>
     </div>
-  )
+  );
 }
