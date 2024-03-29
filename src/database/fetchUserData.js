@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useContext } from "react";
-import { DataContext } from "../Contexts/DataContext";
 
 export default async function fetchUserData(jwt) {
   try {

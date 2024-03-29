@@ -3,32 +3,32 @@ import { DataContext } from "../../Contexts/DataContext";
 import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
 
 export default function Aside() {
-  const { data, setData } = useContext(DataContext);
   const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
-
+  const getUser = JSON.parse(localStorage.getItem("token"));
+  const loggedUser = getUser.value.user.username;
+  const loggedUserId = getUser.value.user.id;
+  
   function logOut() {
     var modal = document.querySelector("modal");
     modal.style.display = "flex";
   }
-
   function alterarFuncaoDoModal(botaoPressionado) {
     const funcaoDoModal = botaoPressionado.target.classList[1];
     setGestorFunction(funcaoDoModal);
   };
-
+  
   function openGestorModal(botaoPressionado) {
     alterarFuncaoDoModal(botaoPressionado);
-    var modal = document.querySelector("#gestor-modal");
-    modal.style.display = "flex";
-  }
+    var gestorModal = document.querySelector("#gestor-modal");
+    gestorModal.style.display = "flex";
+  };
 
   return (
     <aside>
       <section id="landing">
         <div id="logo">
           <img src="./logo.png" alt="English Faster" />
-          <h1>Felipe Cardoso</h1>
-          <h2>Identificador: 01</h2>
+          <h1>{loggedUser}</h1>
         </div>
       </section>
       <section id="alunos">
@@ -41,9 +41,6 @@ export default function Aside() {
           </button>
           <button onClick={openGestorModal} className="crud-alunos cadastrar">
             Cadastrar Aluno
-          </button>
-          <button onClick={openGestorModal} className="crud-alunos alterar">
-            Alterar Aluno
           </button>
           <button onClick={openGestorModal} className="crud-alunos remover">
             Remover Aluno

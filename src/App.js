@@ -5,13 +5,10 @@ import { AuthContext } from "./Contexts/AuthContext";
 import {
   BrowserRouter,
   Routes,
-  Route,
-  Navigate,
-  useNavigate,
+  Route
 } from "react-router-dom";
 import Login from "./Components/pages/Login";
 import Register from "./Components/pages/Register";
-import Main from "./Components/Elements/Main";
 import RotasProtegidas from "./Components/auth/RotasProtegidas";
 import { DataContext } from "./Contexts/DataContext";
 import fetchUserData from "./database/fetchUserData";
@@ -62,7 +59,7 @@ function App() {
     if (verificarTokenJWT()) {
       getDataInDatabaseIfAuth();
     }
-  }, []);
+  }, [auth]);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>

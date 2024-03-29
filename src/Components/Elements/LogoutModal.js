@@ -17,8 +17,8 @@ export default function LogoutModal() {
           <h1>Você tem certeza?</h1>
         </header>
         <main>
-          <button onClick={logOutConfirm} id="confirmar">Sim</button>
-          <button onClick={logOutConfirm} id="negar">Não</button>
+          <button onClick={logOutConfirm} id="confirmar">Sair</button>
+          <button onClick={logOutConfirm} id="negar">Cancelar</button>
         </main>
       </div>
     </modal>

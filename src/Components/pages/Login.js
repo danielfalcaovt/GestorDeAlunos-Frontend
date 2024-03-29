@@ -10,45 +10,50 @@ export default function Login() {
   async function handleSubmit(evt) {
     try {
       evt.preventDefault();
-      const username = evt.target.children[0].value;
-      const password = evt.target.children[1].value;
+      const usernameInput = evt.target.children[0];
+      const passwordInput = evt.target.children[1];
 
-      const response = await fetchLogin(username, password);
+      const response = await fetchLogin(
+        usernameInput.value,
+        passwordInput.value
+      );
       if (response !== false) {
         setAuth(response);
-        var authorized = {
-          value: response,
-          timestamp: new Date().getTime()
-        };
+        var authorized = { value: response, timestamp: new Date().getTime() };
         localStorage.setItem("token", JSON.stringify(authorized));
+        usernameInput.classList.remove("wrong");
+        passwordInput.classList.remove("wrong");
       } else {
         setAuth(false);
         console.error("Errado");
+        usernameInput.classList.add("wrong");
+        passwordInput.classList.add("wrong");
+        alert("Email e/ou senha incorretos.");
       }
     } catch (error) {
       return error.message;
-    };
-  };
+    }
+  }
 
   function handleAuth() {
-    if(auth !== false) {
+    if (auth !== false) {
       navigate("/");
-    };
-  };
+    }
+  }
 
-  useEffect(()=>{
+  useEffect(() => {
     handleAuth();
   }, [auth]);
 
   return (
     <div id="login-page">
       <section id="login-landing">
-        <img id="logo" src="./logo.png" alt="english faster"/>
+        <img id="logo" src="./logo.png" alt="english faster" />
         <h1 id="landing-text">Gestor de Alunos</h1>
       </section>
       <section id="login-form">
         <header>
-          <h1>Login Page</h1>
+          <h1>Login</h1>
         </header>
         <main>
           <form

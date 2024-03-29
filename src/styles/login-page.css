@@ -36,6 +36,17 @@
   margin-bottom: 15px;
   width: 250px;
   height: 25px;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  background: rgb(248, 248, 248);
+  box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.405);
+}
+
+#formularioDeLogin > input:focus {
+  outline: 0px;
+  
 }
 
 #formularioDeLogin button {
@@ -48,6 +59,7 @@
   height: 30px;
   width: 150px;
   margin-top: 15px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.185);
 }
 
 #asset {
@@ -83,4 +95,8 @@
   grid-template-columns: 0.4fr 0.6fr;
   grid-template-rows: 1fr;
   height: 100vh;
+}
+
+.wrong {
+  outline: 1px dashed red;
 }

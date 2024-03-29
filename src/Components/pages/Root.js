@@ -8,17 +8,21 @@ import { DataContext } from "../../Contexts/DataContext";
 import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
 import { verificarValidadeDoToken } from "../../App";
 import fetchUserData from "../../database/fetchUserData";
+import { StudentContext } from "../../Contexts/StudentContext";
 
 export default function Root() {
   const [GestorFunction, setGestorFunction] = useState("consultar");
+  const [SelectedStudent, setSelectedStudent] = useState();
 
   return (
     <div id="app">
-      <Main />
-      <LogoutModal />
       <GestorFunctionContext.Provider value={{ GestorFunction, setGestorFunction }}>
-        <Aside />
-        <Gestor />
+        <StudentContext.Provider value={{ SelectedStudent, setSelectedStudent }}>
+          <Main />
+          <LogoutModal />
+          <Aside />
+          <Gestor />
+        </StudentContext.Provider>
       </GestorFunctionContext.Provider>
     </div>
   );

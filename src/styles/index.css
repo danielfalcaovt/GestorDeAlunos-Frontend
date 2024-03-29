@@ -27,12 +27,13 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
+  height: 100%;
 }
 
 #app #logo img {
   cursor: pointer;
 }
- 
+
 #app aside #landing {
   grid-area: 2/1/2/2;
 }
@@ -43,7 +44,7 @@
   height: 125px;
 }
 
-#app aside #landing h1, h2 {
+#app aside #landing h1 {
   color: white;
   text-align: center;
 }
@@ -80,8 +81,13 @@
   color: white;
   background: #83100c;
   border: 0px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.263);
   cursor: pointer;
+}
+
+#app aside #logout:hover {
+  transition: all 0.3s;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.329);
+  transform: scale(1.03);
 }
 
 #app #alunos header {
@@ -96,7 +102,7 @@
   margin-top: 5px;
 }
 
-#app #alunos header h1:after{
+#app #alunos header h1:after {
   content: "\25bc";
   font-size: 0.9rem;
   margin-left: 5px;
@@ -141,10 +147,6 @@
   background: rgb(30, 169, 30);
 }
 
-#app nav .alterar:hover {
-  background: rgb(177, 177, 60);
-}
-
 #app nav .remover:hover {
   background: #83100c;
 }
@@ -160,19 +162,30 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 800px;
+  position: relative;
 }
+
 #app table {
   border-collapse: collapse;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.342);
+  display: block;
+  position: absolute;
+  top: 0px;
   width: 100%;
+  max-height: 600px;
 }
 
-#app table td,th {
+#app table td,
+th {
   border: 2px solid black;
   font-size: 1rem;
 }
 
 #app table td {
+  height: 55px;
   padding: 2px 8px;
 }
 
@@ -187,18 +200,41 @@
 #app thead {
   background: #83100c;
   color: white;
+  position: sticky;
+  top: -1px;
+  border: 2px solid black;
 }
+
 #app thead th {
   padding: 5px 10px;
 }
-#app tbody > tr:nth-child(even) {
-  background: #952C2C;
-}
-#app tbody > tr:nth-child(odd) {
-  background: #952c2cae;
+
+#app tbody>tr {
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-#app tbody > tr td {
+#app tbody>tr:hover {
+  box-shadow: 0px 0px 3px black;
+}
+
+#app tbody>tr:nth-child(even) {
+  background: #952C2C;
+}
+
+#app tbody>tr:nth-child(even):hover {
+  background: #8a1616;
+}
+
+#app tbody>tr:nth-child(odd) {
+  background: #ce6e6e;
+}
+
+#app tbody>tr:nth-child(odd):hover {
+  background: #f19494;
+}
+
+#app tbody>tr td {
   color: white;
   text-align: center;
 }

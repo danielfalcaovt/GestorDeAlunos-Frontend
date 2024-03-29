@@ -1,12 +1,21 @@
-//! TO DO: CONFERIR SE A MATRICULA ESTA SENDO INSERIDA NO BD JUNTAMENTE DO ESTUDANTE
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../Contexts/DataContext";
 import { AuthContext } from "../../Contexts/AuthContext";
-import tratarCPF from "./tratamentoDeDados/tratarCPF";
+import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
+import { StudentContext } from "../../Contexts/StudentContext";
 
 export default function Main() {
   const { auth, setAuth } = useContext(AuthContext);
   const { data, setData } = useContext(DataContext);
+  const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
+  const { selectedStudent, setSelectedStudent } = useContext(StudentContext);
+
+  function handleClickOnStudent(student) {
+    setSelectedStudent(student);
+    setGestorFunction("alterar");
+    var gestorModal = document.querySelector("#gestor-modal");
+    gestorModal.style.display = "flex";
+  };
 
   return (
     <main>
@@ -24,18 +33,19 @@ export default function Main() {
           </tr>
         </thead>
         <tbody>
-        {/* ID	ALUNO	CPF	EMAIL	CEP / ENDEREÇO	RESPONSÁVEL	MÓDULO */}
           {data && data.map((student) => {
             return (
-              <tr key={student.student_id}>
+              <tr key={student.student_id} onClick={()=>{
+                handleClickOnStudent(student);                
+              }}>
                 <td>1</td>
                 <td>{`${student.first_name} ${student.last_name}`}</td>
-                <td>{tratarCPF(student.cpf)}</td>
-                <td>{student.email}</td>
-                <td className="cep-cell">{student.cep} - {student.address}</td>
-                <td>{student.phone}</td>
-                <td>{student.parent}</td>
-                <td>{student.module}</td>
+                <td>{student.cpf}</td>
+                <td>{student.email ? student.email : "********"}</td>
+                <td className="cep-cell">{student.cep && `${student.cep} -`} {(student.address || student.cep) ? student.address : "Não informado."}</td>
+                <td>{student.phone ? student.phone : "********"}</td>
+                <td>{student.parent ? student.parent : "********"}</td>
+                <td>{student.module ? student.module : "********"}</td>
               </tr>
             );
           })}
