@@ -1,12 +1,10 @@
 import { useContext } from "react";
-import { DataContext } from "../../Contexts/DataContext";
 import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
 
 export default function Aside() {
   const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
   const getUser = JSON.parse(localStorage.getItem("token"));
   const loggedUser = getUser.value.user.username;
-  const loggedUserId = getUser.value.user.id;
   
   function logOut() {
     var modal = document.querySelector("modal");

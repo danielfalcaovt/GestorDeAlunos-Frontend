@@ -14,8 +14,8 @@ export default function Login() {
       const passwordInput = evt.target.children[1];
 
       const response = await fetchLogin(
-        usernameInput.value,
-        passwordInput.value
+        usernameInput.value.trim(),
+        passwordInput.value.trim()
       );
       if (response !== false) {
         setAuth(response);

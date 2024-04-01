@@ -162,10 +162,10 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
-  overflow-x: hidden;
   max-height: 800px;
   position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #app table {
@@ -174,27 +174,27 @@
   display: block;
   position: absolute;
   top: 0px;
-  width: 100%;
-  max-height: 600px;
+  min-width: 1000px;
+  max-width: 1100px;
 }
 
-#app table td,
-th {
+#app table td ,th {
+  width: 10%;
+  height: 50px;
+  padding: 0px 5px;
+}
+
+#app table td, th {
   border: 2px solid black;
   font-size: 1rem;
 }
 
-#app table td {
-  height: 55px;
-  padding: 2px 8px;
+#app table {
+  max-width: 600px;
 }
 
 #app .cep-cell {
   font-size: 1rem;
-}
-
-#app table th {
-  border-bottom: 0px;
 }
 
 #app thead {
@@ -203,10 +203,6 @@ th {
   position: sticky;
   top: -1px;
   border: 2px solid black;
-}
-
-#app thead th {
-  padding: 5px 10px;
 }
 
 #app tbody>tr {
