@@ -48,7 +48,7 @@ export default function Main() {
                 <td>{student.module ? student.module : "********"}</td>
               </tr>
             );
-          }): (data) && <tr key={data.student_id} onClick={()=>{
+          }) : (data) && <tr key={data.student_id} onClick={()=>{
                 handleClickOnStudent(data);                
               }}>
                 <td>1</td>

@@ -1,13 +1,13 @@
 import axios from "axios";
 
-export default async function fetchLogin(username, password) {
+export default async function fetchLogin(email, password) {
   try {
     const userData = {
-      username: username,
+      email: email,
       password: password,
     };
 
-    const serverResponse = await axios.post("http://localhost:8080/login", userData);
+    const serverResponse = await axios.post("http://192.168.1.67:8080/login", userData);
     if (serverResponse.statusText === "OK") {
       const { data } = serverResponse;
       console.log(data);

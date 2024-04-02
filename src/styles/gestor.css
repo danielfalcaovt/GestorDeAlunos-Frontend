@@ -20,8 +20,8 @@
 #gestor-content {
   background: #111266;
   background-image: linear-gradient(to right, #111266, #2022a3);
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   height: 75vh;
   width: 50vw;
   position: relative;
@@ -43,6 +43,7 @@
   color: white;
   position: absolute;
   top: 25px;
+  left: 30px;
   font-weight: normal;
 }
 

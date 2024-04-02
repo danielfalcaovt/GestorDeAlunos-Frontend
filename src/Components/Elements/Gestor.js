@@ -22,7 +22,7 @@ export default function Gestor() {
   async function submitDataFromForm(evt) {
     try {
       evt.preventDefault();
-      
+
       const config = {
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -32,29 +32,32 @@ export default function Gestor() {
         const studentInfoToSearch = {
           first_name: evt.target.first_name.value,
           cpf: evt.target.cpf.value,
-          module: evt.target.module.value
+          module: evt.target.module.value,
         };
         let serverResponse;
-        serverResponse = await axios.post("http://localhost:8080/api/search", studentInfoToSearch, config)
+        serverResponse = await axios.post(
+          "http://192.168.1.67:8080/api/search",
+          studentInfoToSearch,
+          config
+        );
         console.log(studentInfoToSearch);
         if (serverResponse.data.students) {
           if (serverResponse.data.students.length > 1) {
             setData(serverResponse.data.students);
             closeModal();
-          }else{
+          } else {
             setData(serverResponse.data.students[0]);
             closeModal();
           }
-        }else{
-          alert("Estudante não encontrado.")
+        } else {
+          alert("Estudante não encontrado.");
         }
-
       } else if (GestorFunction === "cadastrar") {
         const divInputList = evt.target.children;
         const allInputValues = setAllValuesInList(divInputList);
         const allInputValuesInObject = setAllValuesToObject(allInputValues);
         const serverResponse = await axios.post(
-          "http://localhost:8080/api/register",
+          "http://192.168.1.67:8080/api/register",
           allInputValuesInObject,
           config
         );
@@ -66,12 +69,22 @@ export default function Gestor() {
         const allInputValuesInObject = setAllValuesToObject(allInputValues);
         allInputValuesInObject.student_id = SelectedStudentToModify.student_id;
         const serverResponse = await axios.patch(
-          "http://localhost:8080/api/update",
+          "http://192.168.1.67:8080/api/update",
           allInputValuesInObject,
           config
         );
         console.log(serverResponse);
         window.location.reload();
+      } else if (GestorFunction === "remover") {
+        const studentCpf = evt.target.cpf.value;
+        const serverResponse = await axios.delete(
+          `http://192.168.1.67:8080/api/delete/${studentCpf}`,
+          config
+        );
+        if (serverResponse.data.student) {
+          alert("Estudante removido com sucesso.");
+          window.location.reload();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -119,7 +132,7 @@ export default function Gestor() {
           action="/"
           id="gestor-form"
         >
-          {(GestorFunction === "consultar") && (
+          {GestorFunction === "consultar" && (
             <>
               <div>
                 <label htmlFor="first_name">Primeiro Nome</label>
@@ -348,6 +361,20 @@ export default function Gestor() {
                       ? SelectedStudentToModify.phone
                       : "Indefinido"
                   }
+                ></input>
+              </div>
+            </>
+          )}
+
+          {GestorFunction === "remover" && (
+            <>
+              <div>
+                <label htmlFor="cpf">CPF</label>
+                <input
+                  name="cpf"
+                  type="number"
+                  maxLength={11}
+                  placeholder="00000000000"
                 ></input>
               </div>
             </>

@@ -10,23 +10,23 @@ export default function Login() {
   async function handleSubmit(evt) {
     try {
       evt.preventDefault();
-      const usernameInput = evt.target.children[0];
+      const emailInput = evt.target.children[0];
       const passwordInput = evt.target.children[1];
 
       const response = await fetchLogin(
-        usernameInput.value.trim(),
+        emailInput.value.trim(),
         passwordInput.value.trim()
       );
       if (response !== false) {
         setAuth(response);
         var authorized = { value: response, timestamp: new Date().getTime() };
         localStorage.setItem("token", JSON.stringify(authorized));
-        usernameInput.classList.remove("wrong");
+        emailInput.classList.remove("wrong");
         passwordInput.classList.remove("wrong");
       } else {
         setAuth(false);
         console.error("Errado");
-        usernameInput.classList.add("wrong");
+        emailInput.classList.add("wrong");
         passwordInput.classList.add("wrong");
         alert("Email e/ou senha incorretos.");
       }
@@ -60,14 +60,17 @@ export default function Login() {
             onSubmit={handleSubmit}
             method="POST"
             action="/"
+            autoComplete="on"
             id="formularioDeLogin"
           >
             <input
               autoFocus={true}
               type="text"
-              placeholder="Nome de Usuário"
+              placeholder="Email"
+              autoComplete="email"
+              required
             ></input>
-            <input type="password" placeholder="Senha"></input>
+            <input type="password" placeholder="Senha" required></input>
             <button>Enviar</button>
           </form>
         </main>

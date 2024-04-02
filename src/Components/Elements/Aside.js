@@ -10,6 +10,7 @@ export default function Aside() {
     var modal = document.querySelector("modal");
     modal.style.display = "flex";
   }
+  
   function alterarFuncaoDoModal(botaoPressionado) {
     const funcaoDoModal = botaoPressionado.target.classList[1];
     setGestorFunction(funcaoDoModal);
