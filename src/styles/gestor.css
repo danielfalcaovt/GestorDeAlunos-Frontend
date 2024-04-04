@@ -1,7 +1,9 @@
 @keyframes ascendFromRight {
   0% {
     transform: translate(50%);
-  }100%{
+  }
+
+  100% {
     transform: translate(0%);
   }
 }
@@ -11,7 +13,7 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: flex-end;
   align-items: center;
@@ -22,13 +24,13 @@
   background-image: linear-gradient(to right, #111266, #2022a3);
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  height: 75vh;
-  width: 50vw;
+  height: 85vh;
+  width: 55vw;
   position: relative;
   animation: ascendFromRight ease-in 0.4s;
 }
 
-#gestor-content > button {
+#gestor-content>button {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -39,7 +41,7 @@
   color: white;
 }
 
-#gestor-content > h1 {
+#gestor-content>h1 {
   color: white;
   position: absolute;
   top: 25px;
@@ -47,7 +49,7 @@
   font-weight: normal;
 }
 
-#gestor-content > form {
+#gestor-content>form {
   height: 70%;
   width: 100%;
   position: absolute;
@@ -57,38 +59,39 @@
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#gestor-content > form > div {
+#gestor-content>form>div {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin: auto;
 }
 
-#gestor-content > form > div input,select {
-  width: 180px;
+#gestor-content>form>div input,
+select {
+  width: 14vw;
   height: 30px;
   text-indent: 15px;
   border: 0px;
 }
 
-#gestor-content > form > div label {
+#gestor-content>form>div label {
   background: #5557c9;
   text-align: center;
   height: 30px;
   color: white;
-  width: 100px;
+  width: 8vw;
   font-size: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#gestor-content > form > div input:focus {
+#gestor-content>form>div input:focus {
   transition: all 0.3s;
   outline: 0px;
 }
 
-#gestor-content > form > button {
+#gestor-content>form>button {
   height: 45px;
   margin: auto;
   width: 200px;
@@ -99,4 +102,24 @@
   background: #2eda4b;
   color: white;
   font-size: 1.3rem;
+}
+
+@media screen and (max-width: 700px) {
+
+  #gestor-content {
+    width: 100vw;
+  }
+
+  #gestor-content>form>div {
+    flex-direction: column;
+    margin: 2px;
+  }
+
+  #gestor-content>form>div>label {
+    width: 90%;
+  }
+
+  #gestor-content>form>div>input,select {
+    width: 90%;
+  }
 }

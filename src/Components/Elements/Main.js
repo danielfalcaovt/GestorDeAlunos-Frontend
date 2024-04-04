@@ -22,7 +22,6 @@ export default function Main() {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>ALUNO</th>
             <th>CPF</th>
             <th>EMAIL</th>
@@ -30,6 +29,7 @@ export default function Main() {
             <th>CELULAR</th>
             <th>RESPONSÁVEL</th>
             <th>MÓDULO</th>
+            <th>ID</th>
           </tr>
         </thead>
         <tbody>
@@ -38,14 +38,14 @@ export default function Main() {
               <tr key={student.student_id} onClick={()=>{
                 handleClickOnStudent(student);                
               }}>
-                <td>1</td>
                 <td>{`${student.first_name} ${student.last_name}`}</td>
                 <td>{student.cpf}</td>
                 <td>{student.email ? student.email : "********"}</td>
-                <td className="cep-cell">{student.cep && `${student.cep} -`} {(student.address || student.cep) ? student.address : "Não informado."}</td>
+                <td className="cep-cell">{student.cep && `${student.cep} -`} {(student.address || student.cep) ? student.address : "********"}</td>
                 <td>{student.phone ? student.phone : "********"}</td>
                 <td>{student.parent ? student.parent : "********"}</td>
                 <td>{student.module ? student.module : "********"}</td>
+                <td>{student.cadastrador}</td>
               </tr>
             );
           }) : (data) && <tr key={data.student_id} onClick={()=>{
@@ -55,7 +55,7 @@ export default function Main() {
                 <td>{`${data.first_name} ${data.last_name}`}</td>
                 <td>{data.cpf}</td>
                 <td>{data.email ? data.email : "********"}</td>
-                <td className="cep-cell">{data.cep && `${data.cep} -`} {(data.address || data.cep) ? data.address : "Não informado."}</td>
+                <td className="cep-cell">{data.cep && `${data.cep} -`} {(data.address || data.cep) ? data.address : "********"}</td>
                 <td>{data.phone ? data.phone : "********"}</td>
                 <td>{data.parent ? data.parent : "********"}</td>
                 <td>{data.module ? data.module : "********"}</td>

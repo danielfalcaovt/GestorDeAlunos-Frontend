@@ -1,0 +1,6 @@
+#errorPage > h1 {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+  font-size: 3rem;
+}

@@ -5,6 +5,7 @@ import "./styles/index.css";
 import "./styles/login-page.css";
 import "./styles/gestor.css"
 import "./styles/modal.css";
+import "./styles/error/error.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

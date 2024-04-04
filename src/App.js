@@ -8,6 +8,7 @@ import Register from "./Components/pages/Register";
 import RotasProtegidas from "./Components/auth/RotasProtegidas";
 import { DataContext } from "./Contexts/DataContext";
 import fetchUserData from "./database/fetchUserData";
+import Error404 from "./Components/pages/Error404";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -45,22 +46,24 @@ function App() {
   //! TO DO: REFATORAR O DATACONTEXT
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
-      <DataContext.Provider value={{ data, setData }}> 
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <RotasProtegidas>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <RotasProtegidas>
+                <DataContext.Provider value={{ data, setData }}>
                   <Root />
-                </RotasProtegidas>
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </BrowserRouter>
-      </DataContext.Provider>
+                </DataContext.Provider>
+              </RotasProtegidas>
+            }
+            errorElement  ={<Error404 />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/*" element={<Error404 />} />
+        </Routes>
+      </BrowserRouter>
     </AuthContext.Provider>
   );
 }

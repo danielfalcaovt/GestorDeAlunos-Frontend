@@ -3,6 +3,7 @@ import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
 import axios from "axios";
 import { StudentContext } from "../../Contexts/StudentContext";
 import { DataContext } from "../../Contexts/DataContext";
+import { Outlet } from "react-router";
 
 export default function Gestor() {
   const { GestorFunction, setGestorFunction } = useContext(
@@ -260,7 +261,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.first_name
                       ? SelectedStudentToModify.first_name
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -272,7 +273,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.last_name
                       ? SelectedStudentToModify.last_name
-                      : "Indefinido"
+                      : "********"                
                   }
                 ></input>
               </div>
@@ -285,7 +286,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.cpf
                       ? SelectedStudentToModify.cpf
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -309,7 +310,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.address
                       ? SelectedStudentToModify.address
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -322,7 +323,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.cep
                       ? SelectedStudentToModify.cep
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -334,7 +335,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.email
                       ? SelectedStudentToModify.email
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -346,7 +347,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.parent
                       ? SelectedStudentToModify.parent
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
@@ -359,13 +360,12 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.phone
                       ? SelectedStudentToModify.phone
-                      : "Indefinido"
+                      : "********"
                   }
                 ></input>
               </div>
             </>
           )}
-
           {GestorFunction === "remover" && (
             <>
               <div>

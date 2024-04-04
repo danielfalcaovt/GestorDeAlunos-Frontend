@@ -14,15 +14,17 @@ export default function Root() {
   const [SelectedStudentToModify, setSelectedStudentToModify] = useState();
 
   return (
-    <div id="app">
-      <GestorFunctionContext.Provider value={{ GestorFunction, setGestorFunction }}>
-        <StudentContext.Provider value={{ SelectedStudentToModify, setSelectedStudentToModify }}>
-          <Main />
-          <LogoutModal />
-          <Aside />
-          <Gestor />
-        </StudentContext.Provider>
-      </GestorFunctionContext.Provider>
-    </div>
+      <div id="app">
+        <GestorFunctionContext.Provider value={{ GestorFunction, setGestorFunction }}>
+          <StudentContext.Provider
+            value={{ SelectedStudentToModify, setSelectedStudentToModify }}
+          >
+            <Main />
+            <LogoutModal />
+            <Aside />
+            <Gestor />
+          </StudentContext.Provider>
+        </GestorFunctionContext.Provider>
+      </div>
   );
 }

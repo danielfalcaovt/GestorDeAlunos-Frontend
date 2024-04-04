@@ -14,7 +14,8 @@ export default function LogoutModal() {
     <modal id="logout-modal">
       <div id="modal-content">
         <header>
-          <h1>Você tem certeza?</h1>
+          <h1>Atenção</h1>
+          <h2>Você deseja mesmo sair da sessão ?</h2>
         </header>
         <main>
           <button onClick={logOutConfirm} id="confirmar">Sair</button>

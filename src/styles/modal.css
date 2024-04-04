@@ -11,41 +11,59 @@
 
 #modal-content {
   background-color: rgba(255, 255, 255, 0.938);
-  border-radius: 15px;
+  border-radius: 8px;
   height: 50vh;
   width: 300px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.452);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 #modal-content h1{
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: center;
+}
+
+#modal-content h2 {
+  font-size: 1.3rem;
+  max-width: 70%;
+  text-align: center;
+  margin: 15px;
+}
+
+#modal-content header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #modal-content main {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 #modal-content main button {
   padding: 5px 15px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 0px;
   color: white;
-  height: 30px;
-  width: 100px;
+  height: 35px;
+  width: 200px;
+  font-size: 1.1rem;
   cursor: pointer;
 }
 
 #confirmar {
-  background: red;
-  margin-right: 15px;
+  background-color: red;
+  margin-bottom: 10px;
 }
 
-#negar {
-  text-align: center;
-  background: green;
+#modal-content main #negar {
+  color: red;
+  font-weight: normal;
+  background: transparent;
+  border: 1px solid rgb(255, 0, 0);
 }

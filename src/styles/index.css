@@ -79,7 +79,7 @@
   margin: auto;
   border-radius: 10px;
   color: white;
-  background: #83100c;
+  background: rgb(209, 7, 7);
   border: 0px;
   cursor: pointer;
 }
@@ -168,18 +168,30 @@
   overflow-x: hidden;
 }
 
+#app > main::-webkit-scrollbar {
+  width: 12px;
+}
+
+#app > main::-webkit-scrollbar-track {
+  background-color: #141677;
+}
+
+#app > main::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 15px;
+}
+
 #app table {
   border-collapse: collapse;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.342);
   display: block;
-  position: absolute;
-  top: 0px;
 }
 
 #app table td ,th {
   font-size: 0.9rem;
   overflow: hidden;
   width: 8vw;
+  padding: 0px 5px;
   border: 2px solid black;
 }
 
@@ -227,10 +239,4 @@
 #app tbody>tr td {
   color: white;
   text-align: center;
-}
-
-@media screen and (width: 1024px) {
-  table {
-
-  }
 }

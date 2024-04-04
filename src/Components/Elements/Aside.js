@@ -5,7 +5,7 @@ export default function Aside() {
   const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
   const getUser = JSON.parse(localStorage.getItem("token"));
   const loggedUser = getUser.value.user.username;
-  
+
   function logOut() {
     var modal = document.querySelector("modal");
     modal.style.display = "flex";
@@ -26,7 +26,7 @@ export default function Aside() {
     <aside>
       <section id="landing">
         <div id="logo">
-          <img src="./logo.png" alt="English Faster" />
+          <img onClick={()=>{window.location.reload()}} src="./logo.png" alt="English Faster" />
           <h1>{loggedUser}</h1>
         </div>
       </section>
