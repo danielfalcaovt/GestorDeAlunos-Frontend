@@ -1,64 +1,65 @@
-import InputMask from "react-input-mask";
-import { useContext, useState } from "react";
-import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
-import { StudentContext } from "../../Contexts/StudentContext";
-import { DataContext } from "../../Contexts/DataContext";
-import deleteStudentQuery from "./CRUD/deleteStudentQuery";
-import patchStudentQuery from "./CRUD/patchStudentQuery";
-import registerStudentQuery from "./CRUD/registerStudentQuery";
-import readStudentQuery from "./CRUD/readStudentQuery";
+import InputMask from 'react-input-mask'
+import { useContext, React } from 'react'
+import { GestorFunctionContext } from '../../Contexts/GestorFunctionContext'
+import { StudentContext } from '../../Contexts/StudentContext'
+import { DataContext } from '../../Contexts/DataContext'
+import deleteStudentQuery from './studentQueries/deleteStudentQuery'
+import patchStudentQuery from './studentQueries/patchStudentQuery'
+import registerStudentQuery from './studentQueries/registerStudentQuery'
+import readStudentQuery from './studentQueries/readStudentQuery'
 
-export default function Gestor() {
-  const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
-  const { SelectedStudentToModify, setSelectedStudentToModify } = useContext(StudentContext);
-  const { data, setData } = useContext(DataContext);
-  const getUser = JSON.parse(localStorage.getItem("token"));
-  const jwtToken = getUser.value.token;
-  
+export default function Gestor () {
+  const { GestorFunction } = useContext(GestorFunctionContext)
+  const { SelectedStudentToModify } = useContext(StudentContext)
+  const { setData } = useContext(DataContext)
+  const getUser = JSON.parse(localStorage.getItem('token'))
+  const jwtToken = getUser.value.token
+
   // Fechar modal ao pressionar "ESC"
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      closeModal();
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closeModal()
     }
-  });
-  
-  async function submitDataFromForm(evt) {
-    try {
-      evt.preventDefault();
+  })
 
+  async function submitDataFromForm (evt) {
+    try {
+      evt.preventDefault()
       const config = {
         headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      };
-      if (GestorFunction === "consultar") {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      }
+      if (GestorFunction === 'consultar') {
         const studentInfoToSearch = {
           first_name: evt.target.first_name.value,
           cpf: evt.target.cpf.value,
           module: evt.target.module.value,
           parent: evt.target.parent.value
-        };
-        const foundStudent = await readStudentQuery(studentInfoToSearch, config);
-        if (!foundStudent) {
-          alert("Estudante não encontrado.");
-        }else{
-          setData(foundStudent);
         }
-      } else if (GestorFunction === "cadastrar") {
-        const divInputList = evt.target.children;
-        await registerStudentQuery(divInputList, config);
-      } else if (GestorFunction === "alterar") {
-        const inputValuesList = evt.target.children;
-        await patchStudentQuery(inputValuesList, SelectedStudentToModify.student_id, config);
-      } else if (GestorFunction === "remover") {
-        const studentCpf = evt.target.cpf.value;
-        await deleteStudentQuery(studentCpf, config);
+        const foundStudent = await readStudentQuery(studentInfoToSearch, config)
+        if (!foundStudent) {
+          alert('Estudante não encontrado.')
+        } else {
+          setData(foundStudent)
+        }
+      } else if (GestorFunction === 'cadastrar') {
+        const divInputList = evt.target.children
+        await registerStudentQuery(divInputList, config)
+      } else if (GestorFunction === 'alterar') {
+        const inputValuesList = evt.target.children
+        await patchStudentQuery(
+          inputValuesList,
+          SelectedStudentToModify.student_id,
+          config
+        )
+      } else if (GestorFunction === 'remover') {
+        const studentCpf = evt.target.cpf.value
+        await deleteStudentQuery(studentCpf, config)
       }
     } catch (error) {
-      console.error(error);
-      alert(
-        error.response.data.error
-      );
+      console.error(error)
+      alert(error.response.data.error)
     }
   }
 
@@ -75,7 +76,7 @@ export default function Gestor() {
           action="/"
           id="gestor-form"
         >
-          {GestorFunction === "consultar" && (
+          {GestorFunction === 'consultar' && (
             <>
               <div>
                 <label htmlFor="first_name">Primeiro Nome</label>
@@ -114,7 +115,7 @@ export default function Gestor() {
             </>
           )}
 
-          {GestorFunction === "cadastrar" && (
+          {GestorFunction === 'cadastrar' && (
             <>
               <div>
                 <label htmlFor="first_name">Primeiro Nome</label>
@@ -148,10 +149,10 @@ export default function Gestor() {
                   <option selected disabled>
                     ---- Selecionar ----
                   </option>
-                  <option value={"B"}>Básico</option>
-                  <option value={"P"}>Pré - Intermediário</option>
-                  <option value={"I"}>Intermediário</option>
-                  <option value={"A"}>Avançado</option>
+                  <option value={'B'}>Básico</option>
+                  <option value={'P'}>Pré - Intermediário</option>
+                  <option value={'I'}>Intermediário</option>
+                  <option value={'A'}>Avançado</option>
                 </select>
               </div>
               <div>
@@ -196,7 +197,7 @@ export default function Gestor() {
               </div>
             </>
           )}
-          {GestorFunction === "alterar" && (
+          {GestorFunction === 'alterar' && (
             <>
               <div>
                 <label htmlFor="first_name">Primeiro Nome</label>
@@ -206,7 +207,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.first_name
                       ? SelectedStudentToModify.first_name
-                      : "********"
+                      : '********'
                   }
                 ></input>
               </div>
@@ -218,7 +219,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.last_name
                       ? SelectedStudentToModify.last_name
-                      : "********"
+                      : '********'
                   }
                 ></input>
               </div>
@@ -230,7 +231,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.cpf
                       ? SelectedStudentToModify.cpf
-                      : "********"
+                      : '********'
                   }
                 />
               </div>
@@ -240,10 +241,10 @@ export default function Gestor() {
                   <option selected disabled>
                     {SelectedStudentToModify.module}
                   </option>
-                  <option value={"B"}>Básico</option>
-                  <option value={"P"}>Pré - Intermediário</option>
-                  <option value={"I"}>Intermediário</option>
-                  <option value={"A"}>Avançado</option>
+                  <option value={'B'}>Básico</option>
+                  <option value={'P'}>Pré - Intermediário</option>
+                  <option value={'I'}>Intermediário</option>
+                  <option value={'A'}>Avançado</option>
                 </select>
               </div>
               <div>
@@ -254,7 +255,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.address
                       ? SelectedStudentToModify.address
-                      : "********"
+                      : '********'
                   }
                 ></input>
               </div>
@@ -266,7 +267,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.cep
                       ? SelectedStudentToModify.cep
-                      : "********"
+                      : '********'
                   }
                 />
               </div>
@@ -278,7 +279,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.email
                       ? SelectedStudentToModify.email
-                      : "********"
+                      : '********'
                   }
                 ></input>
               </div>
@@ -290,7 +291,7 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.parent
                       ? SelectedStudentToModify.parent
-                      : "********"
+                      : '********'
                   }
                 ></input>
               </div>
@@ -299,12 +300,16 @@ export default function Gestor() {
                 <InputMask
                   name="phone"
                   mask="(99) 999999999"
-                  placeholder="(**) *********"
+                  placeholder={
+                    SelectedStudentToModify.phone
+                      ? SelectedStudentToModify.phone
+                      : '(**) *********'
+                  }
                 />
               </div>
             </>
           )}
-          {GestorFunction === "remover" && (
+          {GestorFunction === 'remover' && (
             <>
               <div>
                 <label htmlFor="cpf">CPF</label>
@@ -320,23 +325,23 @@ export default function Gestor() {
         </form>
       </main>
     </modal>
-  );
+  )
 }
 
-export function setAllValuesInList(divInputList) {
-  const allInputValues = [];
+export function setAllValuesInList (divInputList) {
+  const allInputValues = []
   for (let pos = 0; pos < divInputList.length - 1; pos++) {
-    const inputValue = divInputList[pos].children[1].value.trim();
-    if (inputValue !== "") {
-      allInputValues.push(inputValue);
+    const inputValue = divInputList[pos].children[1].value.trim()
+    if (inputValue !== '') {
+      allInputValues.push(inputValue)
     } else {
-      allInputValues.push(undefined);
+      allInputValues.push(undefined)
     }
   }
-  return allInputValues;
+  return allInputValues
 }
 
-export function setAllValuesToObject(allInputValues) {
+export function setAllValuesToObject (allInputValues) {
   const allInputValuesInObject = {
     first_name: allInputValues[0],
     last_name: allInputValues[1],
@@ -346,14 +351,14 @@ export function setAllValuesToObject(allInputValues) {
     cep: allInputValues[5],
     email: allInputValues[6],
     parent: allInputValues[7],
-    phone: allInputValues[8],
-  };
-  return allInputValuesInObject;
+    phone: allInputValues[8]
+  }
+  return allInputValuesInObject
 }
 
-export function closeModal() {
-  var modal = document.querySelectorAll(".modal");
-  for (let pos = 0; pos < modal.length; pos++){
-    modal[pos].style.display = "none";
+export function closeModal () {
+  const modal = document.querySelectorAll('.modal')
+  for (let pos = 0; pos < modal.length; pos++) {
+    modal[pos].style.display = 'none'
   }
 }

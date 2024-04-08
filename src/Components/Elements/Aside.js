@@ -1,40 +1,48 @@
-import { useContext } from "react";
-import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
-import fetchUserData from "../../database/fetchUserData";
-import { DataContext } from "../../Contexts/DataContext";
+import { useContext, React } from 'react'
+import { GestorFunctionContext } from '../../Contexts/GestorFunctionContext'
+import fetchUserData from '../../database/fetchUserData'
+import { DataContext } from '../../Contexts/DataContext'
 
-export default function Aside() {
-  const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
-  const { data, setData } = useContext(DataContext)
-  const getUser = JSON.parse(localStorage.getItem("token"));
-  const loggedUser = getUser.value.user.username;
+export default function Aside () {
+  const { setGestorFunction } = useContext(
+    GestorFunctionContext
+  )
+  const { setData } = useContext(DataContext)
+  const getUser = JSON.parse(localStorage.getItem('token'))
+  const loggedUser = getUser.value.user.username
 
-  function logOut() {
-    var modal = document.querySelector("modal");
-    modal.style.display = "flex";
+  function logOut () {
+    const modal = document.querySelector('modal')
+    modal.style.display = 'flex'
   }
-  
-  function alterarFuncaoDoModal(botaoPressionado) {
-    const funcaoDoModal = botaoPressionado.target.classList[1];
-    setGestorFunction(funcaoDoModal);
-  };
-  
-  function openGestorModal(botaoPressionado) {
-    alterarFuncaoDoModal(botaoPressionado);
-    var gestorModal = document.querySelector("#gestor-modal");
-    gestorModal.style.display = "flex";
-  };
 
-  async function getAllStudents() {
-    const databaseResponse = await fetchUserData(getUser.value.token);
-    setData(databaseResponse.data.students);
+  function alterarFuncaoDoModal (botaoPressionado) {
+    const funcaoDoModal = botaoPressionado.target.classList[1]
+    setGestorFunction(funcaoDoModal)
+  }
+
+  function openGestorModal (botaoPressionado) {
+    alterarFuncaoDoModal(botaoPressionado)
+    const gestorModal = document.querySelector('#gestor-modal')
+    gestorModal.style.display = 'flex'
+  }
+
+  async function getAllStudents () {
+    const databaseResponse = await fetchUserData(getUser.value.token)
+    setData(databaseResponse.data.students)
   }
 
   return (
     <aside>
       <section id="landing">
         <div id="logo">
-          <img onClick={()=>{getAllStudents()}} src="./logo.png" alt="English Faster" />
+          <img
+            onClick={() => {
+              getAllStudents()
+            }}
+            src="./logo.png"
+            alt="English Faster"
+          />
           <h1>{loggedUser}</h1>
         </div>
       </section>
@@ -58,5 +66,5 @@ export default function Aside() {
         Sair
       </button>
     </aside>
-  );
+  )
 }

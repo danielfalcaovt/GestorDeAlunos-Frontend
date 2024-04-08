@@ -1,48 +1,47 @@
-import { useEffect, useState } from "react";
-import Root from "./Components/pages/Root";
-import React from "react";
-import { AuthContext } from "./Contexts/AuthContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./Components/pages/Login";
-import Register from "./Components/pages/Register";
-import RotasProtegidas from "./Components/auth/RotasProtegidas";
-import { DataContext } from "./Contexts/DataContext";
-import fetchUserData from "./database/fetchUserData";
-import Error404 from "./Components/pages/Error404";
+import { useEffect, useState, React } from 'react'
+import Root from './Components/pages/Root'
+import { AuthContext } from './Contexts/AuthContext'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './Components/pages/Login'
+import Register from './Components/pages/Register'
+import RotasProtegidas from './Components/auth/RotasProtegidas'
+import { DataContext } from './Contexts/DataContext'
+import fetchUserData from './database/fetchUserData'
+import Error404 from './Components/pages/Error404'
 
-function App() {
-  const [auth, setAuth] = useState(false);
-  const [data, setData] = useState();
+function App () {
+  const [auth, setAuth] = useState(false)
+  const [data, setData] = useState()
 
-  function verificarTokenJWT() {
-    const authorized = JSON.parse(localStorage.getItem("token"));
+  function verificarTokenJWT () {
+    const authorized = JSON.parse(localStorage.getItem('token'))
     if (authorized) {
       if (verificarValidadeDoToken(authorized)) {
-        setAuth(true);
-        return true;
+        setAuth(true)
+        return true
       }
     }
   }
 
-  async function getDataInDatabaseIfAuth() {
+  async function getDataInDatabaseIfAuth () {
     try {
-      const token = JSON.parse(localStorage.getItem("token"));
+      const token = JSON.parse(localStorage.getItem('token'))
       if (verificarValidadeDoToken(token)) {
-        const databaseResponse = await fetchUserData(token.value.token);
-        setData(databaseResponse.data.students);
+        const databaseResponse = await fetchUserData(token.value.token)
+        setData(databaseResponse.data.students)
       } else {
-        return false;
+        return false
       }
     } catch (error) {
-      console.error(error.message);
-      return false;
+      console.error(error.message)
+      return false
     }
   }
   useEffect(() => {
     if (verificarTokenJWT()) {
-      getDataInDatabaseIfAuth();
+      getDataInDatabaseIfAuth()
     }
-  }, [auth]);
+  }, [auth])
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <BrowserRouter>
@@ -56,7 +55,7 @@ function App() {
                 </DataContext.Provider>
               </RotasProtegidas>
             }
-            errorElement  ={<Error404 />}
+            errorElement={<Error404 />}
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -64,20 +63,20 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
-  );
+  )
 }
 
-export function verificarValidadeDoToken(token) {
-  let dataToken = new Date(token.timestamp);
-  let dataInvalida = new Date(token.timestamp);
-  dataInvalida.setHours(dataToken.getHours() + 8);
-  let dataAtual = new Date();
+export function verificarValidadeDoToken (token) {
+  const dataToken = new Date(token.timestamp)
+  const dataInvalida = new Date(token.timestamp)
+  dataInvalida.setHours(dataToken.getHours() + 8)
+  const dataAtual = new Date()
   if (dataAtual >= dataInvalida) {
-    localStorage.removeItem("token");
-    return false;
+    localStorage.removeItem('token')
+    return false
   } else {
-    return true;
+    return true
   }
 }
 
-export default App;
+export default App

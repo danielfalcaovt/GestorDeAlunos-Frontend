@@ -1,16 +1,17 @@
-export default function LogoutModal() {
+import React from 'react'
 
-  function logOutConfirm(evt) {
-    var modal = document.querySelector("#logout-modal");
-    if (evt.target.id === "confirmar"){
-      localStorage.removeItem("token");
+export default function LogoutModal () {
+  function logOutConfirm (evt) {
+    const modal = document.querySelector('#logout-modal')
+    if (evt.target.id === 'confirmar') {
+      localStorage.removeItem('token')
       window.location.reload()
-    }else {
-      modal.style.display = "none";
+    } else {
+      modal.style.display = 'none'
     }
   }
 
-  return(
+  return (
     <modal className="modal" id="logout-modal">
       <div id="modal-content">
         <header>
@@ -18,10 +19,14 @@ export default function LogoutModal() {
           <h2>Você deseja mesmo sair da sessão ?</h2>
         </header>
         <main>
-          <button onClick={logOutConfirm} id="confirmar">Sair</button>
-          <button onClick={logOutConfirm} id="negar">Cancelar</button>
+          <button onClick={logOutConfirm} id="confirmar">
+            Sair
+          </button>
+          <button onClick={logOutConfirm} id="negar">
+            Cancelar
+          </button>
         </main>
       </div>
     </modal>
-  );
-};
+  )
+}

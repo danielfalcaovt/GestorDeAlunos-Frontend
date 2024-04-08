@@ -1,88 +1,91 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../Contexts/AuthContext";
-import { useNavigate } from "react-router";
-import axios from "axios";
+import { useContext, useEffect, React } from 'react'
+import { AuthContext } from '../../Contexts/AuthContext'
+import { useNavigate } from 'react-router'
+import axios from 'axios'
 
-export default function Register() {
-  const { auth, setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
+export default function Register () {
+  const { auth } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-  async function handleSubmit(evt) {
+  async function handleSubmit (evt) {
     try {
-      evt.preventDefault();
-      const divInputList = evt.target.children;
-      const allInputValuesInObject = setAllInputValuesToObject(divInputList);
-      console.log(allInputValuesInObject);
-      const registeredUser = await axios.post("http://192.168.1.67:8080/register", allInputValuesInObject);
+      evt.preventDefault()
+      const divInputList = evt.target.children
+      const allInputValuesInObject = setAllInputValuesToObject(divInputList)
+      console.log(allInputValuesInObject)
+      const registeredUser = await axios.post(
+        'http://192.168.1.67:8080/register',
+        allInputValuesInObject
+      )
       if (registeredUser.data.user) {
-        navigate("/login");
+        navigate('/login')
       } else {
-        alert("Tente novamente...");
-        return false;
-      };
+        alert('Tente novamente...')
+        return false
+      }
     } catch (err) {
-      console.error(err);
-      alert(err.response.data.error);
-      return err.message;
+      console.error(err)
+      alert(err.response.data.error)
+      return err.message
     }
   }
 
-  function setAllInputValuesToObject(inputList) {
-    const inputValues = {};
+  function setAllInputValuesToObject (inputList) {
+    const inputValues = {}
 
     for (let pos = 0; pos < inputList.length - 1; pos++) {
-      inputValues[inputList[pos].name] = inputList[pos].value;
+      inputValues[inputList[pos].name] = inputList[pos].value
     }
 
     if (!emailRegexTest(inputValues.email)) {
-      return false;
-    };
+      return false
+    }
 
     if (!confirmEmail(inputValues.email, inputValues.confirmEmail)) {
-      return false;
-    };
+      return false
+    }
 
     if (!confirmPassword(inputValues.password, inputValues.confirmPassword)) {
-      return false;
-    };
+      return false
+    }
 
-    return inputValues;
+    return inputValues
   }
 
-  function emailRegexTest(email) {
-    const regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/gm;
+  function emailRegexTest (email) {
+    const regex = /^[\w\-.]+@([\w-]+\.)+[\w-]{2,}$/gm
     if (regex.test(email)) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
   }
 
   function confirmEmail (email, confirmEmail) {
     if (email === confirmEmail) {
-      return true;
-    }else{
-      return false;
+      return true
+    } else {
+      return false
     }
   }
 
-  function confirmPassword(password, confirmPassword) {
+  function confirmPassword (password, confirmPassword) {
     if (password === confirmPassword) {
-      return true;
-    }else{
-      return false;
+      return true
+    } else {
+      return false
     }
   }
 
-  function handleAuth() {
+  function handleAuth () {
     if (auth !== false) {
-      navigate("/");
+      navigate('/')
     }
   }
 
   useEffect(() => {
-    handleAuth();
-  }, [auth]);
+    handleAuth()
+  }, [auth])
 
   return (
     <div id="login-page">
@@ -115,7 +118,7 @@ export default function Register() {
               name="email"
               required
             ></input>
-                        <input
+            <input
               autoFocus={true}
               type="text"
               placeholder="Confirmar email"
@@ -139,5 +142,5 @@ export default function Register() {
         </main>
       </section>
     </div>
-  );
+  )
 }
