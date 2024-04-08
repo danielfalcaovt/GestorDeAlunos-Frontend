@@ -1,25 +1,27 @@
-import { useContext } from "react";
+import InputMask from "react-input-mask";
+import { useContext, useState } from "react";
 import { GestorFunctionContext } from "../../Contexts/GestorFunctionContext";
-import axios from "axios";
 import { StudentContext } from "../../Contexts/StudentContext";
 import { DataContext } from "../../Contexts/DataContext";
-import { Outlet } from "react-router";
+import deleteStudentQuery from "./CRUD/deleteStudentQuery";
+import patchStudentQuery from "./CRUD/patchStudentQuery";
+import registerStudentQuery from "./CRUD/registerStudentQuery";
+import readStudentQuery from "./CRUD/readStudentQuery";
 
 export default function Gestor() {
-  const { GestorFunction, setGestorFunction } = useContext(
-    GestorFunctionContext
-  );
-  const { SelectedStudentToModify, setSelectedStudentToModifyToModify } =
-    useContext(StudentContext);
+  const { GestorFunction, setGestorFunction } = useContext(GestorFunctionContext);
+  const { SelectedStudentToModify, setSelectedStudentToModify } = useContext(StudentContext);
   const { data, setData } = useContext(DataContext);
   const getUser = JSON.parse(localStorage.getItem("token"));
   const jwtToken = getUser.value.token;
-
+  
+  // Fechar modal ao pressionar "ESC"
   document.addEventListener("keydown", (evt) => {
     if (evt.key === "Escape") {
       closeModal();
     }
   });
+  
   async function submitDataFromForm(evt) {
     try {
       evt.preventDefault();
@@ -34,94 +36,34 @@ export default function Gestor() {
           first_name: evt.target.first_name.value,
           cpf: evt.target.cpf.value,
           module: evt.target.module.value,
+          parent: evt.target.parent.value
         };
-        let serverResponse;
-        serverResponse = await axios.post(
-          "http://192.168.1.67:8080/api/search",
-          studentInfoToSearch,
-          config
-        );
-        console.log(studentInfoToSearch);
-        if (serverResponse.data.students) {
-          if (serverResponse.data.students.length > 1) {
-            setData(serverResponse.data.students);
-            closeModal();
-          } else {
-            setData(serverResponse.data.students[0]);
-            closeModal();
-          }
-        } else {
+        const foundStudent = await readStudentQuery(studentInfoToSearch, config);
+        if (!foundStudent) {
           alert("Estudante não encontrado.");
+        }else{
+          setData(foundStudent);
         }
       } else if (GestorFunction === "cadastrar") {
         const divInputList = evt.target.children;
-        const allInputValues = setAllValuesInList(divInputList);
-        const allInputValuesInObject = setAllValuesToObject(allInputValues);
-        const serverResponse = await axios.post(
-          "http://192.168.1.67:8080/api/register",
-          allInputValuesInObject,
-          config
-        );
-        console.log(serverResponse);
-        window.location.reload();
+        await registerStudentQuery(divInputList, config);
       } else if (GestorFunction === "alterar") {
-        const divInputList = evt.target.children;
-        const allInputValues = setAllValuesInList(divInputList);
-        const allInputValuesInObject = setAllValuesToObject(allInputValues);
-        allInputValuesInObject.student_id = SelectedStudentToModify.student_id;
-        const serverResponse = await axios.patch(
-          "http://192.168.1.67:8080/api/update",
-          allInputValuesInObject,
-          config
-        );
-        console.log(serverResponse);
-        window.location.reload();
+        const inputValuesList = evt.target.children;
+        await patchStudentQuery(inputValuesList, SelectedStudentToModify.student_id, config);
       } else if (GestorFunction === "remover") {
         const studentCpf = evt.target.cpf.value;
-        const serverResponse = await axios.delete(
-          `http://192.168.1.67:8080/api/delete/${studentCpf}`,
-          config
-        );
-        if (serverResponse.data.student) {
-          alert("Estudante removido com sucesso.");
-          window.location.reload();
-        }
+        await deleteStudentQuery(studentCpf, config);
       }
     } catch (error) {
       console.error(error);
-      alert(error.response.data.error);
+      alert(
+        error.response.data.error
+      );
     }
   }
 
-  function setAllValuesInList(divInputList) {
-    const allInputValues = [];
-    for (let pos = 0; pos < divInputList.length - 1; pos++) {
-      const inputValue = divInputList[pos].children[1].value.trim();
-      if (inputValue !== "") {
-        allInputValues.push(inputValue);
-      } else {
-        allInputValues.push(undefined);
-      }
-    }
-    return allInputValues;
-  }
-
-  function setAllValuesToObject(allInputValues) {
-    const allInputValuesInObject = {
-      first_name: allInputValues[0],
-      last_name: allInputValues[1],
-      cpf: allInputValues[2],
-      module: allInputValues[3],
-      address: allInputValues[4],
-      cep: allInputValues[5],
-      email: allInputValues[6],
-      parent: allInputValues[7],
-      phone: allInputValues[8],
-    };
-    return allInputValuesInObject;
-  }
   return (
-    <modal id="gestor-modal">
+    <modal className="modal" id="gestor-modal">
       <main id="gestor-content">
         <button onClick={closeModal} id="gestor-close">
           x
@@ -145,12 +87,11 @@ export default function Gestor() {
               </div>
               <div>
                 <label htmlFor="cpf">CPF</label>
-                <input
+                <InputMask
                   name="cpf"
-                  type="number"
-                  maxLength={11}
-                  placeholder="00000000000"
-                ></input>
+                  mask="999.999.999-99"
+                  placeholder="999.999.999-99"
+                />
               </div>
               <div>
                 <label htmlFor="module">Módulo</label>
@@ -161,6 +102,14 @@ export default function Gestor() {
                   <option>Intermediário</option>
                   <option>Avançado</option>
                 </select>
+              </div>
+              <div>
+                <label htmlFor="parent">Responsável</label>
+                <input
+                  name="parent"
+                  type="text"
+                  placeholder="Alex dos Santos"
+                ></input>
               </div>
             </>
           )}
@@ -187,13 +136,11 @@ export default function Gestor() {
               </div>
               <div>
                 <label htmlFor="cpf">CPF</label>
-                <input
+                <InputMask
+                  mask="999.999.999-99"
+                  placeholder="999.999.999-99"
                   name="cpf"
-                  type="number"
-                  maxLength={11}
-                  placeholder="00000000000"
-                  required
-                ></input>
+                />
               </div>
               <div>
                 <label htmlFor="module">Módulo</label>
@@ -217,12 +164,11 @@ export default function Gestor() {
               </div>
               <div>
                 <label htmlFor="cep">CEP</label>
-                <input
+                <InputMask
                   name="cep"
-                  type="number"
-                  maxLength={8}
-                  placeholder="26000000"
-                ></input>
+                  mask="99999-999"
+                  placeholder="26000-000"
+                />
               </div>
               <div>
                 <label htmlFor="email">Email</label>
@@ -233,21 +179,20 @@ export default function Gestor() {
                 ></input>
               </div>
               <div>
-                <label htmlFor="parent_name">Responsável</label>
+                <label htmlFor="parent">Responsável</label>
                 <input
-                  name="parent_name"
+                  name="parent"
                   type="text"
                   placeholder="Alex dos Santos"
                 ></input>
               </div>
               <div>
                 <label htmlFor="phone">Celular</label>
-                <input
+                <InputMask
                   name="phone"
-                  type="number"
-                  maxLength={11}
-                  placeholder="21987654321"
-                ></input>
+                  mask="(99) 999999999"
+                  placeholder="(21) 999999999"
+                />
               </div>
             </>
           )}
@@ -273,22 +218,21 @@ export default function Gestor() {
                   placeholder={
                     SelectedStudentToModify.last_name
                       ? SelectedStudentToModify.last_name
-                      : "********"                
+                      : "********"
                   }
                 ></input>
               </div>
               <div>
                 <label htmlFor="cpf">CPF</label>
-                <input
+                <InputMask
                   name="cpf"
-                  type="number"
-                  maxLength={11}
+                  mask="999.999.999-99"
                   placeholder={
                     SelectedStudentToModify.cpf
                       ? SelectedStudentToModify.cpf
                       : "********"
                   }
-                ></input>
+                />
               </div>
               <div>
                 <label htmlFor="module">Módulo</label>
@@ -316,16 +260,15 @@ export default function Gestor() {
               </div>
               <div>
                 <label htmlFor="cep">CEP</label>
-                <input
+                <InputMask
                   name="cep"
-                  type="number"
-                  maxLength={8}
+                  mask="99999-999"
                   placeholder={
                     SelectedStudentToModify.cep
                       ? SelectedStudentToModify.cep
                       : "********"
                   }
-                ></input>
+                />
               </div>
               <div>
                 <label htmlFor="email">Email</label>
@@ -340,9 +283,9 @@ export default function Gestor() {
                 ></input>
               </div>
               <div>
-                <label htmlFor="parent_name">Responsável</label>
+                <label htmlFor="parent">Responsável</label>
                 <input
-                  name="parent_name"
+                  name="parent"
                   type="text"
                   placeholder={
                     SelectedStudentToModify.parent
@@ -353,16 +296,11 @@ export default function Gestor() {
               </div>
               <div>
                 <label htmlFor="phone">Celular</label>
-                <input
+                <InputMask
                   name="phone"
-                  type="number"
-                  maxLength={11}
-                  placeholder={
-                    SelectedStudentToModify.phone
-                      ? SelectedStudentToModify.phone
-                      : "********"
-                  }
-                ></input>
+                  mask="(99) 999999999"
+                  placeholder="(**) *********"
+                />
               </div>
             </>
           )}
@@ -370,12 +308,11 @@ export default function Gestor() {
             <>
               <div>
                 <label htmlFor="cpf">CPF</label>
-                <input
+                <InputMask
+                  mask="999.999.999-99"
                   name="cpf"
-                  type="number"
-                  maxLength={11}
-                  placeholder="00000000000"
-                ></input>
+                  placeholder="999.999.999-99"
+                />
               </div>
             </>
           )}
@@ -386,7 +323,37 @@ export default function Gestor() {
   );
 }
 
-function closeModal() {
-  var modal = document.querySelector("#gestor-modal");
-  modal.style.display = "none";
+export function setAllValuesInList(divInputList) {
+  const allInputValues = [];
+  for (let pos = 0; pos < divInputList.length - 1; pos++) {
+    const inputValue = divInputList[pos].children[1].value.trim();
+    if (inputValue !== "") {
+      allInputValues.push(inputValue);
+    } else {
+      allInputValues.push(undefined);
+    }
+  }
+  return allInputValues;
+}
+
+export function setAllValuesToObject(allInputValues) {
+  const allInputValuesInObject = {
+    first_name: allInputValues[0],
+    last_name: allInputValues[1],
+    cpf: allInputValues[2],
+    module: allInputValues[3],
+    address: allInputValues[4],
+    cep: allInputValues[5],
+    email: allInputValues[6],
+    parent: allInputValues[7],
+    phone: allInputValues[8],
+  };
+  return allInputValuesInObject;
+}
+
+export function closeModal() {
+  var modal = document.querySelectorAll(".modal");
+  for (let pos = 0; pos < modal.length; pos++){
+    modal[pos].style.display = "none";
+  }
 }

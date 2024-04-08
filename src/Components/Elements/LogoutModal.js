@@ -11,7 +11,7 @@ export default function LogoutModal() {
   }
 
   return(
-    <modal id="logout-modal">
+    <modal className="modal" id="logout-modal">
       <div id="modal-content">
         <header>
           <h1>Atenção</h1>

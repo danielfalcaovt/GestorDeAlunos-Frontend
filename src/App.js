@@ -43,7 +43,6 @@ function App() {
       getDataInDatabaseIfAuth();
     }
   }, [auth]);
-  //! TO DO: REFATORAR O DATACONTEXT
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <BrowserRouter>
