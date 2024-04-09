@@ -12,7 +12,6 @@ export default function Register () {
       evt.preventDefault()
       const divInputList = evt.target.children
       const allInputValuesInObject = setAllInputValuesToObject(divInputList)
-      console.log(allInputValuesInObject)
       const registeredUser = await axios.post(
         'http://192.168.1.67:8080/register',
         allInputValuesInObject
@@ -24,7 +23,6 @@ export default function Register () {
         return false
       }
     } catch (err) {
-      console.error(err)
       alert(err.response.data.error)
       return err.message
     }

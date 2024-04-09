@@ -13,7 +13,6 @@ export default async function fetchLogin (email, password) {
     )
     if (serverResponse.statusText === 'OK') {
       const { data } = serverResponse
-      console.log(data)
       return data
     } else {
       return false

@@ -2,14 +2,15 @@ import { useContext, React } from 'react'
 import { GestorFunctionContext } from '../../Contexts/GestorFunctionContext'
 import fetchUserData from '../../database/fetchUserData'
 import { DataContext } from '../../Contexts/DataContext'
+import Cookies from 'js-cookie'
 
 export default function Aside () {
   const { setGestorFunction } = useContext(
     GestorFunctionContext
   )
   const { setData } = useContext(DataContext)
-  const getUser = JSON.parse(localStorage.getItem('token'))
-  const loggedUser = getUser.value.user.username
+  const loggedUser = Cookies.get('user')
+  const token = Cookies.get('jwtToken')
 
   function logOut () {
     const modal = document.querySelector('modal')
@@ -28,7 +29,7 @@ export default function Aside () {
   }
 
   async function getAllStudents () {
-    const databaseResponse = await fetchUserData(getUser.value.token)
+    const databaseResponse = await fetchUserData(token)
     setData(databaseResponse.data.students)
   }
 

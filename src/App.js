@@ -8,32 +8,31 @@ import RotasProtegidas from './Components/auth/RotasProtegidas'
 import { DataContext } from './Contexts/DataContext'
 import fetchUserData from './database/fetchUserData'
 import Error404 from './Components/pages/Error404'
+import Cookies from 'js-cookie'
 
 function App () {
   const [auth, setAuth] = useState(false)
   const [data, setData] = useState()
 
   function verificarTokenJWT () {
-    const authorized = JSON.parse(localStorage.getItem('token'))
-    if (authorized) {
-      if (verificarValidadeDoToken(authorized)) {
-        setAuth(true)
-        return true
-      }
+    const token = Cookies.get('jwt')
+    if (typeof token === 'string') {
+      setAuth(true)
+      return true
     }
   }
 
   async function getDataInDatabaseIfAuth () {
     try {
-      const token = JSON.parse(localStorage.getItem('token'))
-      if (verificarValidadeDoToken(token)) {
-        const databaseResponse = await fetchUserData(token.value.token)
+      const token = Cookies.get('jwt')
+      if (typeof token === 'string') {
+        const databaseResponse = await fetchUserData(token)
         setData(databaseResponse.data.students)
       } else {
         return false
       }
     } catch (error) {
-      console.error(error.message)
+      console.error(error)
       return false
     }
   }

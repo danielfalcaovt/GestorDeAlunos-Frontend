@@ -7,14 +7,12 @@ import deleteStudentQuery from './studentQueries/deleteStudentQuery'
 import patchStudentQuery from './studentQueries/patchStudentQuery'
 import registerStudentQuery from './studentQueries/registerStudentQuery'
 import readStudentQuery from './studentQueries/readStudentQuery'
+import Cookies from 'js-cookie'
 
 export default function Gestor () {
   const { GestorFunction } = useContext(GestorFunctionContext)
   const { SelectedStudentToModify } = useContext(StudentContext)
   const { setData } = useContext(DataContext)
-  const getUser = JSON.parse(localStorage.getItem('token'))
-  const jwtToken = getUser.value.token
-
   // Fechar modal ao pressionar "ESC"
   document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
@@ -25,9 +23,10 @@ export default function Gestor () {
   async function submitDataFromForm (evt) {
     try {
       evt.preventDefault()
+      const token = Cookies.get('jwt')
       const config = {
         headers: {
-          Authorization: `Bearer ${jwtToken}`
+          Authorization: `Bearer ${token}`
         }
       }
       if (GestorFunction === 'consultar') {
@@ -62,6 +61,8 @@ export default function Gestor () {
           } else {
             alert('Parâmetros inválidos.')
           }
+        } else {
+          alert('Parâmetros inválidos.')
         }
       }
     } catch (error) {

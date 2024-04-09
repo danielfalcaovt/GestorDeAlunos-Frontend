@@ -1,10 +1,11 @@
 import React from 'react'
+import Cookie from 'js-cookie'
 
 export default function LogoutModal () {
   function logOutConfirm (evt) {
     const modal = document.querySelector('#logout-modal')
     if (evt.target.id === 'confirmar') {
-      localStorage.removeItem('token')
+      Cookie.remove('jwt')
       window.location.reload()
     } else {
       modal.style.display = 'none'
