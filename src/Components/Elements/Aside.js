@@ -48,7 +48,7 @@ export default function Aside () {
       </section>
       <section id="alunos">
         <header>
-          <h1>Alunos</h1>
+          <h1 draggable='true'>Alunos</h1>
         </header>
         <nav>
           <button onClick={openGestorModal} className="crud-alunos consultar">

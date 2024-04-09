@@ -55,7 +55,14 @@ export default function Gestor () {
         )
       } else if (GestorFunction === 'remover') {
         const studentCpf = evt.target.cpf.value
-        await deleteStudentQuery(studentCpf, config)
+        const confirmation = evt.target.confirmation.value
+        if (confirmation === 'DELETAR') {
+          if (checkIfCpfIsValid(studentCpf) && studentCpf.length === 14) {
+            await deleteStudentQuery(studentCpf, config)
+          } else {
+            alert('Parâmetros inválidos.')
+          }
+        }
       }
     } catch (error) {
       console.error(error)
@@ -63,9 +70,18 @@ export default function Gestor () {
     }
   }
 
+  function checkIfCpfIsValid (cpf) {
+    const cpfRegex = /_/g
+    if (!cpfRegex.test(cpf)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <modal className="modal" id="gestor-modal">
-      <main id="gestor-content">
+      <main className={GestorFunction} id="gestor-content">
         <button onClick={closeModal} id="gestor-close">
           x
         </button>
@@ -318,6 +334,10 @@ export default function Gestor () {
                   name="cpf"
                   placeholder="999.999.999-99"
                 />
+              </div>
+              <div>
+                <label htmlFor="confirmation">Para confirmar digite {'\''}DELETAR{'\''}</label>
+                <input type='text' name='confirmation' placeholder='DELETAR' />
               </div>
             </>
           )}

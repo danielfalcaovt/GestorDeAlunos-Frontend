@@ -46,7 +46,7 @@
   position: absolute;
   top: 25px;
   left: 30px;
-  font-weight: normal;
+  font-size: 2.5rem;
 }
 
 #gestor-content>form {
