@@ -30,54 +30,87 @@ export default function Gestor () {
         }
       }
       if (GestorFunction === 'consultar') {
-        const studentInfoToSearch = {
-          first_name: evt.target.first_name.value,
-          cpf: evt.target.cpf.value,
-          module: evt.target.module.value,
-          parent: evt.target.parent.value
-        }
-        const foundStudent = await readStudentQuery(studentInfoToSearch, config)
-        if (!foundStudent) {
-          alert('Estudante não encontrado.')
+        const studentCpf = evt.target.cpf.value
+        if (studentCpf.length === 14 && !checkIfInputMaskValueIsValid(studentCpf)) {
+          alertInvalidParams()
         } else {
+          const studentInfoToSearch = {
+            first_name: evt.target.first_name.value,
+            cpf: evt.target.cpf.value,
+            module: evt.target.module.value,
+            parent: evt.target.parent.value
+          }
+          const foundStudent = await readStudentQuery(studentInfoToSearch, config)
           setData(foundStudent)
         }
       } else if (GestorFunction === 'cadastrar') {
         const divInputList = evt.target.children
-        await registerStudentQuery(divInputList, config)
+        if (checkIfValuesOfInputMaskAreInvalid(evt)) {
+          alertInvalidParams()
+        } else {
+          await registerStudentQuery(divInputList, config)
+        }
       } else if (GestorFunction === 'alterar') {
-        const inputValuesList = evt.target.children
-        await patchStudentQuery(
-          inputValuesList,
-          SelectedStudentToModify.student_id,
-          config
-        )
+        const divInputList = evt.target.children
+        if (checkIfValuesOfInputMaskAreInvalid(evt)) {
+          alertInvalidParams()
+        } else {
+          await patchStudentQuery(
+            divInputList,
+            SelectedStudentToModify.student_id,
+            config
+          )
+        }
       } else if (GestorFunction === 'remover') {
         const studentCpf = evt.target.cpf.value
         const confirmation = evt.target.confirmation.value
         if (confirmation === 'DELETAR') {
-          if (checkIfCpfIsValid(studentCpf) && studentCpf.length === 14) {
+          if (checkIfInputMaskValueIsValid(studentCpf) && studentCpf.length === 14) {
             await deleteStudentQuery(studentCpf, config)
           } else {
-            alert('Parâmetros inválidos.')
+            alertInvalidParams()
           }
         } else {
-          alert('Parâmetros inválidos.')
+          alertInvalidParams()
         }
       }
     } catch (error) {
-      console.error(error)
       alert(error.response.data.error)
+      console.error(error)
     }
   }
 
-  function checkIfCpfIsValid (cpf) {
-    const cpfRegex = /_/g
-    if (!cpfRegex.test(cpf)) {
-      return true
+  function checkIfValuesOfInputMaskAreInvalid (evt) {
+    const studentCpf = evt.target.cpf.value
+    const studentCep = evt.target.cep.value
+    if (studentCpf) {
+      if (!checkIfInputMaskValueIsValid(studentCpf)) {
+        return true
+      }
+    }
+
+    if (studentCep) {
+      if (!checkIfInputMaskValueIsValid(studentCep)) {
+        return true
+      }
+    }
+  }
+
+  function checkIfInputMaskValueIsValid (InputMaskValue) {
+    if (InputMaskValue.length === 14 || InputMaskValue.length === 9) {
+      const InputMaskValueRegex = /_/g
+      if (!InputMaskValueRegex.test(InputMaskValue)) {
+        return true
+      } else {
+        return false
+      }
     } else {
       return false
     }
+  }
+
+  function alertInvalidParams () {
+    alert('Parâmetros Inválidos.')
   }
 
   return (

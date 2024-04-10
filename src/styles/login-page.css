@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   width: max-content;
-  height: 50vh;
+  height: max-content;
 }
 
 #formularioDeLogin > input {
@@ -57,7 +57,7 @@
   color: white;
   cursor: pointer;
   height: 30px;
-  width: 150px;
+  width: 80%;
   margin-top: 15px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.185);
 }
@@ -76,15 +76,17 @@
 }
 
 #login-page header {
-  height: 10vh;
+  margin-bottom: 7.5vh;
   width: 100%;
+  color: black;
+  font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #login-form main {
-  height: 60vh;
+  height: 30vh;
   width: 100%;
   display: flex;
   justify-content: center;

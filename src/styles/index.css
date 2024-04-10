@@ -6,6 +6,11 @@
   font-family: "Work Sans", Arial, Helvetica, sans-serif;
 }
 
+body, #root {
+  width: 100vw;
+  background: white;
+}
+
 #app {
   display: grid;
   grid-template-columns: 0.7fr 3fr;
@@ -196,7 +201,7 @@
 }
 
 #app table td {
-  height: 5vh;
+  height: 8vh;
 }
 
 #app table th {

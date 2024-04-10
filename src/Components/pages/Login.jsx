@@ -3,6 +3,7 @@ import fetchLogin from '../../database/fetchLogin'
 import { AuthContext } from '../../Contexts/AuthContext'
 import { useNavigate } from 'react-router'
 import Cookies from 'js-cookie'
+import { Link } from 'react-router-dom'
 
 export default function Login () {
   const { auth, setAuth } = useContext(AuthContext)
@@ -16,8 +17,8 @@ export default function Login () {
 
       const response = await fetchLogin(emailInput.value.trim(), passwordInput.value.trim())
       if (response !== false) {
-        Cookies.set('jwt', response.token, { expires: 1 })
-        Cookies.set('user', response.user.username, { expires: 1 })
+        Cookies.set('jwt', response.token, { expires: 0.3 })
+        Cookies.set('user', response.user.username, { expires: 0.3 })
         setAuth(response)
         emailInput.classList.remove('wrong')
         passwordInput.classList.remove('wrong')
@@ -46,7 +47,9 @@ export default function Login () {
   return (
     <div id="login-page">
       <section id="login-landing">
+      <Link to="/register">
         <img id="logo" src="./logo.png" alt="english faster" />
+      </Link>
         <h1 id="landing-text">Gestor de Alunos</h1>
       </section>
       <section id="login-form">
@@ -58,14 +61,12 @@ export default function Login () {
             onSubmit={handleSubmit}
             method="POST"
             action="/"
-            autoComplete="on"
             id="formularioDeLogin"
           >
             <input
               autoFocus={true}
               type="text"
               placeholder="Email"
-              autoComplete="email"
               required
             ></input>
             <input type="password" placeholder="Senha" required></input>

@@ -30,7 +30,8 @@ export default function Main () {
             <td>{student.cpf}</td>
             <td>{student.email ? student.email : '********'}</td>
             <td className="cep-cell">
-              {student.cep && `${student.cep} -`}{' '}
+              {student.cep && `${student.cep}`}
+              {(student.address && student.cep) ? ' - ' : ''}
               {student.address || student.cep ? student.address : '********'}
             </td>
             <td>{student.phone ? student.phone : '********'}</td>

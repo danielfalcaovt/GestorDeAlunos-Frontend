@@ -10,7 +10,7 @@ export default function Aside () {
   )
   const { setData } = useContext(DataContext)
   const loggedUser = Cookies.get('user')
-  const token = Cookies.get('jwtToken')
+  const token = Cookies.get('jwt')
 
   function logOut () {
     const modal = document.querySelector('modal')

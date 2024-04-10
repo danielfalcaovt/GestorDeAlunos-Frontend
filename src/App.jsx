@@ -16,7 +16,7 @@ function App () {
 
   function verificarTokenJWT () {
     const token = Cookies.get('jwt')
-    if (typeof token === 'string') {
+    if (token && typeof token === 'string') {
       setAuth(true)
       return true
     }
@@ -41,6 +41,7 @@ function App () {
       getDataInDatabaseIfAuth()
     }
   }, [auth])
+
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       <BrowserRouter>
