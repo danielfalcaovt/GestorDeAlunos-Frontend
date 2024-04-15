@@ -8,6 +8,7 @@ Funcionalidades Principais
 <ul>
  <li> Após fazer login com sucesso, o usuário é redirecionado para a página principal.</li>
  <li> A tela de login verifica as credenciais do usuário e concede acesso à área restrita.</li>
+  <li> Ao fazer um cadastro na aplicação, o identificador "nome de usuario" do mesmo será informado.</li>
 </ul>
 
 ![engfaster8](https://github.com/danielfalcaovt/GestorDeAlunos-Frontend/assets/146419346/31e04e75-293b-497b-9f92-497f780cebf7)
