@@ -182,7 +182,7 @@ body, #root {
 }
 
 #app > main::-webkit-scrollbar-thumb {
-  background-color: black;
+  background-color: #4547df;
   border-radius: 15px;
 }
 
@@ -190,9 +190,11 @@ body, #root {
   border-collapse: collapse;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.342);
   display: block;
+  position: absolute;
+  top: -1px;
 }
 
-#app table td ,th {
+#app table td, th {
   font-size: 0.9rem;
   overflow: hidden;
   width: 12vw;
@@ -211,8 +213,6 @@ body, #root {
 #app thead {
   background: #83100c;
   color: white;
-  position: sticky;
-  top: -1px;
   border: 2px solid black;
 }
 

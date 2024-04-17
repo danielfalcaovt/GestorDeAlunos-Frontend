@@ -83,6 +83,7 @@ export default function Gestor () {
   function checkIfValuesOfInputMaskAreInvalid (evt) {
     const studentCpf = evt.target.cpf.value
     const studentCep = evt.target.cep.value
+    const studentPhone = evt.target.phone.value
     if (studentCpf) {
       if (!checkIfInputMaskValueIsValid(studentCpf)) {
         return true
@@ -91,6 +92,12 @@ export default function Gestor () {
 
     if (studentCep) {
       if (!checkIfInputMaskValueIsValid(studentCep)) {
+        return true
+      }
+    }
+
+    if (studentPhone) {
+      if (!checkIfInputMaskValueIsValid(studentPhone)) {
         return true
       }
     }

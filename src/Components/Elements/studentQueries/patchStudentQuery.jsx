@@ -1,11 +1,7 @@
 import { setAllValuesInList, setAllValuesToObject } from '../Gestor'
 import axios from 'axios'
 
-export default async function patchStudentQuery (
-  divInputList,
-  studentId,
-  axiosConfig
-) {
+export default async function patchStudentQuery (divInputList, studentId, axiosConfig) {
   const allInputValues = setAllValuesInList(divInputList)
   const allInputValuesInObject = setAllValuesToObject(allInputValues)
   allInputValuesInObject.student_id = studentId
