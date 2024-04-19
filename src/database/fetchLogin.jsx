@@ -8,7 +8,7 @@ export default async function fetchLogin (email, password) {
     }
 
     const serverResponse = await axios.post(
-      'http://192.168.1.67:8080/login',
+      'http://192.168.1.12:8080/login',
       userData
     )
     if (serverResponse.statusText === 'OK') {

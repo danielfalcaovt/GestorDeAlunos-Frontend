@@ -13,7 +13,7 @@ export default function Register () {
       const divInputList = evt.target.children
       const allInputValuesInObject = setAllInputValuesToObject(divInputList)
       const registeredUser = await axios.post(
-        'http://192.168.1.67:8080/register',
+        'http://192.168.1.12:8080/register',
         allInputValuesInObject
       )
       if (registeredUser.data.user) {

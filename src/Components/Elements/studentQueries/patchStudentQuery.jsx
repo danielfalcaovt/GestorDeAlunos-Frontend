@@ -6,7 +6,7 @@ export default async function patchStudentQuery (divInputList, studentId, axiosC
   const allInputValuesInObject = setAllValuesToObject(allInputValues)
   allInputValuesInObject.student_id = studentId
   const serverResponse = await axios.patch(
-    'http://192.168.1.67:8080/api/update',
+    'http://192.168.1.12:8080/api/update',
     allInputValuesInObject,
     axiosConfig
   )

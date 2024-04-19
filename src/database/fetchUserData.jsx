@@ -6,7 +6,7 @@ export default async function fetchUserData (jwt) {
       headers: { Authorization: `Bearer ${jwt}` }
     }
     const databaseResponse = await axios.get(
-      'http://192.168.1.67:8080/api',
+      'http://192.168.1.12:8080/api',
       config
     )
     return databaseResponse
